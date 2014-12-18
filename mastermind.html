@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="MastermindApp">
+
+  <head>
+  	<meta charset="UTF-8">
+  	<title>Mastermind Solver</title>
+
+    <script src="angular.min.js"></script>
+    <script src="mastermind.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <style>
+        .choice1 { background-color: #fea3aa; }
+        .choice2 { background-color: #f8b88b; }
+        .choice3 { background-color: #faf884; }
+        .choice4 { background-color: #baed91; }
+        .choice5 { background-color: #b2cefe; }
+        .choice6 { background-color: #f2a2e8; }
+
+        .guess, .answer { 
+        	height: 50px;
+        	width: 50px;
+        	margin: 2px;
+
+        	text-align: center;
+        	vertical-align: middle;
+        	line-height: 50px;
+        }
+    </style>
+
+  </head>
+
+  <body data-ng-controller="MastermindController">
+
+    <div class="container">
+
+    	<div class="row">
+    		<div class="col-sm-2 col-sm-offset-4">
+    			<button type="button" value="test" data-ng-click="clickStartNewGame();">Start New</button>
+    		</div>
+        </div>
+
+        <p>Solution (to be hidden later)</p>
+        <div class="row">
+        	<div class="col-sm-1" data-ng-repeat="number in answer track by $index">
+        		<div class="answer choice{{answer[$index]}}">{{answer[$index]}}</div>
+        	</div>
+        </div>
+
+        <p>Guesses</p>
+        <div class="row" data-ng-repeat="guess in guesses">
+        	<div class="col-sm-1" data-ng-repeat="(key, value) in guess">
+        		<div class="guess choice{{value}}" data-ng-click="clickGuess(guess, key)">{{value}}</div>
+        	</div>
+        	<div class="col-sm-2"><button type="button">Submit Answer</button></div>
+        </div>
+
+    </div>
+
+  </body>
+
+</html>
