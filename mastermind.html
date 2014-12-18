@@ -43,17 +43,25 @@
 
         <p>Solution (to be hidden later)</p>
         <div class="row">
-        	<div class="col-sm-1" data-ng-repeat="number in answer track by $index">
-        		<div class="answer choice{{answer[$index]}}">{{answer[$index]}}</div>
+        	<div class="col-sm-1" data-ng-repeat="number in solution track by $index">
+        		<div class="answer choice{{solution[$index]}}">{{solution[$index]}}</div>
         	</div>
         </div>
 
-        <p>Guesses</p>
-        <div class="row" data-ng-repeat="guess in guesses">
-        	<div class="col-sm-1" data-ng-repeat="(key, value) in guess">
-        		<div class="guess choice{{value}}" data-ng-click="clickGuess(guess, key)">{{value}}</div>
-        	</div>
-        	<div class="col-sm-2"><button type="button">Submit Answer</button></div>
+        <div data-ng-if="solution.length > 0">
+            <p>Guesses</p>
+            <div class="row" ng-init="outerIndex = $index" data-ng-repeat="guess in guesses track by $index">
+                <div class="col-sm-1" ng-init="innerIndex = $index" data-ng-repeat="num in guess track by $index">
+                    <div class="guess choice{{num}}" data-ng-click="clickGuess(outerIndex, $index)">{{num}}</div>
+                </div>
+        	    <div class="col-sm-2">
+                    <button type="button" data-ng-click="clickSubmitAnswer(outerIndex)" data-ng-show="guesses.length == outerIndex + 1">Submit Answer</button>
+                    <p data-ng-show="guesses.length > outerIndex + 1">
+                        Red: {{hints[$index]['red']}} White: {{hints[$index]['white']}}
+                    </p>
+                    <p data-ng-if="hints[$index]['red'] == 4">You WON!</p>
+                </div>
+            </div>
         </div>
 
     </div>
